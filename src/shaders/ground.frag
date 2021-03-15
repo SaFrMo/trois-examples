@@ -1,4 +1,7 @@
 varying float n;
+varying vec2 vUv;
+uniform sampler2D voronoi;
+
 void main(){
-    gl_FragColor = vec4(vec3(n), 1.);
+    gl_FragColor = texture2D(voronoi, vUv);
 }

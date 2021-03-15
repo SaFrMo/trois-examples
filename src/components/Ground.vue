@@ -9,13 +9,16 @@
             ref="shader"
             :fragment-shader="fragmentShader"
             :vertex-shader="vertexShader"
-        />
+        >
+            <Texture src="voronoi.png" />
+        </ShaderMaterial>
     </Plane>
 </template>
 
 <script>
 import vertexShader from '../shaders/ground.vert'
 import fragmentShader from '../shaders/ground.frag'
+// import {TextureLoader}
 
 export default {
     data() {
@@ -30,6 +33,9 @@ export default {
     methods: {
         update() {
             requestAnimationFrame(this.update)
+        },
+        onLoad() {
+            console.log('ready')
         },
     },
 }
