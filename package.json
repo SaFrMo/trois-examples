@@ -1,0 +1,21 @@
+{
+  "name": "016-trois8",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "three": "0.126.1",
+    "troisjs": "0.1.16",
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "rollup-plugin-glslify": "1.2.0",
+    "sass": "1.32.8",
+    "vite": "^2.0.5"
+  }
+}
