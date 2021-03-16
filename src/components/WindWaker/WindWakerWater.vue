@@ -1,5 +1,4 @@
 <template>
-    <!-- TODO: clear background -->
     <Renderer ref="renderer" mouse-over click resize antialias orbit-ctrl>
         <Camera :position="{ y: 25, z: 30 }" />
         <Scene>

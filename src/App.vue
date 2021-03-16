@@ -10,7 +10,6 @@
 
         <div v-if="selected" class="selected">
             <button @click="selected = ''" aria-label="Close."></button>
-
             <component :is="selected" class="canvas" />
         </div>
     </section>
@@ -18,11 +17,13 @@
 
 <script>
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
+import Lightboxes from './components/Lightboxes/Lightboxes.vue'
+
 export default {
-    components: { WindWakerWater },
+    components: { WindWakerWater, Lightboxes },
     data() {
         return {
-            selected: '',
+            selected: 'lightboxes',
         }
     },
     mounted() {
