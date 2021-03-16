@@ -10,7 +10,7 @@
             :fragment-shader="fragmentShader"
             :vertex-shader="vertexShader"
         >
-            <Texture src="voronoi.png" />
+            <Texture src="voronoi.png" uniform="voronoi" />
         </ShaderMaterial>
     </Plane>
 </template>
@@ -25,13 +25,18 @@ export default {
         return {
             fragmentShader,
             vertexShader,
+            startTime: 0,
         }
     },
     mounted() {
+        this.startTime = Date.now()
         this.update()
     },
     methods: {
         update() {
+            this.$refs.shader.uniforms.uTime = {
+                value: Date.now() - this.startTime,
+            }
             requestAnimationFrame(this.update)
         },
         onLoad() {
