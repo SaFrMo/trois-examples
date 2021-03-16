@@ -2,9 +2,17 @@
     <section class="gallery">
         <ul class="items">
             <li v-for="(cmp, i) in Object.keys($options.components)" :key="i">
-                <component :is="cmp" />
+                <button @click="selected = cmp">
+                    <component :is="cmp" />
+                </button>
             </li>
         </ul>
+
+        <div v-if="selected" class="selected">
+            <button @click="selected = ''" aria-label="Close."></button>
+
+            <component :is="selected" class="canvas" />
+        </div>
     </section>
 </template>
 
@@ -12,6 +20,18 @@
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 export default {
     components: { WindWakerWater },
+    data() {
+        return {
+            selected: '',
+        }
+    },
+    mounted() {
+        window.addEventListener('keydown', (evt) => {
+            if (evt.code === 'Escape') {
+                this.selected = ''
+            }
+        })
+    },
 }
 </script>
 
@@ -39,6 +59,32 @@ html,
         margin: 30px auto;
         justify-content: center;
         align-items: center;
+    }
+    .selected {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        bottom: 30px;
+        left: 30px;
+        width: 100%;
+
+        button {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        .canvas {
+            position: relative;
+        }
+    }
+    button {
+        -webkit-appearance: none;
+        border: none;
+        background: none;
+        cursor: pointer;
     }
 }
 </style>
