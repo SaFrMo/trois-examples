@@ -1,7 +1,7 @@
 <template>
     <Plane
         :rotation="{ x: Math.PI * -0.5 }"
-        :scale="{ x: 40, y: 40 }"
+        :scale="{ x: 100, y: 100 }"
         :width-segments="100"
         :height-segments="100"
     >

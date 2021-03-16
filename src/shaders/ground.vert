@@ -1,5 +1,5 @@
 varying vec2 vUv;
-varying float n;
+uniform float uTime;
 
 float rand(vec2 n) { 
 	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
@@ -17,8 +17,15 @@ float noise(vec2 p){
 }
 
 void main(){
-    // n = noise(uv * 100.);
 	vUv = uv;
-    vec3 pos = position;
+	float amplitude = 
+		sin(uTime * 0.001 + uv.x * 10.) + 
+		sin(uTime * 0.003 + uv.x * 3.45) +
+		sin(uTime * 0.001 + uv.x * 5.38 ) + 
+		sin(uTime * 0.001 + uv.y * 10.) + 
+		sin(uTime * 0.0006 + uv.y * 2.34);
+
+    vec3 pos = position + normal * amplitude;
+
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
 }
