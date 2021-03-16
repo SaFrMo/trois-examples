@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import vertexShader from '../shaders/ground.vert'
-import fragmentShader from '../shaders/ground.frag'
+import vertexShader from '../../shaders/ground.vert'
+import fragmentShader from '../../shaders/ground.frag'
 // import {TextureLoader}
 
 export default {

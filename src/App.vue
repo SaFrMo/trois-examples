@@ -1,17 +1,17 @@
 <template>
-    <Renderer ref="renderer" mouse-over click resize antialias orbit-ctrl>
-        <Camera :position="{ y: 30, z: 30 }" />
-        <Scene>
-            <PointLight :position="{ y: 50, z: 50 }" />
-            <Ground />
-        </Scene>
-    </Renderer>
+    <section class="gallery">
+        <ul class="items">
+            <li v-for="(cmp, i) in Object.keys($options.components)" :key="i">
+                <component :is="cmp" />
+            </li>
+        </ul>
+    </section>
 </template>
 
 <script>
-import Ground from './components/Ground.vue'
+import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 export default {
-    components: { Ground },
+    components: { WindWakerWater },
 }
 </script>
 
@@ -27,9 +27,18 @@ html,
     height: 100%;
 }
 
-.app {
-    canvas {
-        display: block;
+.gallery {
+    .items {
+        display: grid;
+        grid-template-columns: repeat(3, 300px);
+        grid-auto-rows: 170px;
+        grid-gap: 40px;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        margin: 30px auto;
+        justify-content: center;
+        align-items: center;
     }
 }
 </style>
