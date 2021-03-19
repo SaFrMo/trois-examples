@@ -18,12 +18,13 @@
 <script>
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 import Lightboxes from './components/Lightboxes/Lightboxes.vue'
+import InstancedColors from './components/InstancedColors/InstancedColors.vue'
 
 export default {
-    components: { WindWakerWater, Lightboxes },
+    components: { WindWakerWater, Lightboxes, InstancedColors },
     data() {
         return {
-            selected: '',
+            selected: 'instanced-colors',
         }
     },
     mounted() {
