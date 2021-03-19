@@ -10,7 +10,7 @@
             :fragment-shader="fragmentShader"
             :vertex-shader="vertexShader"
         >
-            <Texture src="voronoi.png" uniform="voronoi" />
+            <Texture src="/images/voronoi.png" uniform="voronoi" />
         </ShaderMaterial>
     </Plane>
 </template>

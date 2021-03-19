@@ -23,7 +23,7 @@ export default {
     components: { WindWakerWater, Lightboxes },
     data() {
         return {
-            selected: 'lightboxes',
+            selected: '',
         }
     },
     mounted() {
