@@ -1,9 +1,12 @@
 <template>
     <Renderer ref="renderer" resize antialias orbit-ctrl>
-        <Camera :position="{ x: -250, y: 0, z: 0 }" ref="camera" />
+        <Camera :position="{ z: 250 }" ref="camera" />
         <Scene>
             <AmbientLight :intensity="0.5" />
-            <PointLight :position="{ x: -250, y: 0 }" />
+            <PointLight
+                :position="{ x: -150, y: 100, z: 200 }"
+                :intensity="0.8"
+            />
             <InstancedMesh :count="count" @ready="ready">
                 <BoxGeometry :size="8" />
                 <PhongMaterial />
