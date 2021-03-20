@@ -2,6 +2,7 @@
     <Renderer ref="renderer" resize antialias orbit-ctrl>
         <Camera :position="{ x: -250, y: 0, z: 0 }" ref="camera" />
         <Scene>
+            <AmbientLight />
             <PointLight />
             <InstancedMesh :count="count" @ready="ready">
                 <SphereGeometry ref="sphere" :radius="5" />
@@ -63,7 +64,10 @@ export default {
                             z * spacer - zOffset
                         )
                         dummy.updateMatrix()
-                        mesh.setMatrixAt(i++, dummy.matrix)
+                        mesh.setMatrixAt(i, dummy.matrix)
+                        mesh.setColorAt(i, color.set(colors[i]))
+
+                        i++
                     }
                 }
             }
