@@ -3,8 +3,8 @@
         <Camera :position="{ x: 15, y: 20, z: 30 }" />
         <Scene>
             <PointLight />
-            <InstancedMesh ref="imesh" :count="count" @ready="onReady">
-                <SphereGeometry :radius="5" />
+            <InstancedMesh :count="count" @ready="ready">
+                <SphereGeometry ref="sphere" :radius="5" />
                 <PhongMaterial />
             </InstancedMesh>
         </Scene>
@@ -27,14 +27,13 @@ export default {
         return {
             colors,
             count,
+            startTime: Date.now(),
         }
     },
-    mounted() {
-        console.log('mounted', this.$refs.imesh.material)
-    },
     methods: {
-        onReady({ mesh: imesh }) {
-            console.log('ready', imesh.material)
+        ready(box) {
+            const { mesh } = box
+
             const dummy = new Object3D()
             const color = new Color()
 
@@ -43,10 +42,47 @@ export default {
                 const scale = rnd(0.2, 1)
                 dummy.scale.set(scale, scale, scale)
                 dummy.updateMatrix()
-                imesh.setMatrixAt(i, dummy.matrix)
+                mesh.setMatrixAt(i, dummy.matrix)
 
-                imesh.setColorAt(i, color.set(colors[i]))
+                mesh.setColorAt(i, color.set(colors[i]))
             }
+            mesh.instanceMatrix.needsUpdate = true
+
+            this.render(box)
+        },
+        render(box) {
+            const { mesh } = box
+            const time = (Date.now() - this.startTime) * 0.001
+
+            // rotate full box
+            mesh.rotation.x = Math.sin(time / 4)
+            mesh.rotation.y = Math.sin(time / 2)
+
+            // let i = 0
+            // for (let x = 0; x < 10; x++)
+            //     for (let y = 0; y < 10; y++)
+            //         for (let z = 0; z < 10; z++) {
+            //             const id = i++
+            //             tempObject.position.set(5 - x, 5 - y, 5 - z)
+            //             tempObject.rotation.y =
+            //                 Math.sin(x / 4 + time) +
+            //                 Math.sin(y / 4 + time) +
+            //                 Math.sin(z / 4 + time)
+            //             tempObject.rotation.z = tempObject.rotation.y * 2
+            //             if (hovered !== previous.current) {
+            //                 tempColor
+            //                     .set(id === hovered ? 'white' : colors[id])
+            //                     .toArray(colorArray, id * 3)
+            //                 ref.current.geometry.attributes.color.needsUpdate = true
+            //             }
+            //             const scale = id === hovered ? 2 : 1
+            //             tempObject.scale.set(scale, scale, scale)
+            //             tempObject.updateMatrix()
+            //             ref.current.setMatrixAt(id, tempObject.matrix)
+            //         }
+            // ref.current.instanceMatrix.needsUpdate = true
+
+            requestAnimationFrame(() => this.render(box))
         },
     },
 }
