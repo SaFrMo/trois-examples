@@ -2,10 +2,10 @@
     <Renderer ref="renderer" resize antialias orbit-ctrl>
         <Camera :position="{ x: -250, y: 0, z: 0 }" ref="camera" />
         <Scene>
-            <AmbientLight />
-            <PointLight />
+            <AmbientLight :intensity="0.5" />
+            <PointLight :position="{ x: -250, y: 0 }" />
             <InstancedMesh :count="count" @ready="ready">
-                <SphereGeometry ref="sphere" :radius="5" />
+                <BoxGeometry :size="8" />
                 <PhongMaterial />
             </InstancedMesh>
         </Scene>
@@ -38,19 +38,10 @@ export default {
         ready(box) {
             const { mesh } = box
 
-            const dummy = new Object3D()
+            const blank = new Object3D()
             const color = new Color()
             const spacer = 15
 
-            // for (let i = 0; i < count; i++) {
-            //     dummy.position.set(rndFS(200), rndFS(200), rndFS(200))
-            //     const scale = rnd(0.2, 1)
-            //     dummy.scale.set(scale, scale, scale)
-            //     dummy.updateMatrix()
-            //     mesh.setMatrixAt(i, dummy.matrix)
-
-            //     mesh.setColorAt(i, color.set(colors[i]))
-            // }
             let i = 0
             const xOffset = spacer * width * 0.5
             const yOffset = spacer * height * 0.5
@@ -58,13 +49,13 @@ export default {
             for (let x = 0; x < width; x++) {
                 for (let y = 0; y < height; y++) {
                     for (let z = 0; z < depth; z++) {
-                        dummy.position.set(
+                        blank.position.set(
                             x * spacer - xOffset,
                             y * spacer - yOffset,
                             z * spacer - zOffset
                         )
-                        dummy.updateMatrix()
-                        mesh.setMatrixAt(i, dummy.matrix)
+                        blank.updateMatrix()
+                        mesh.setMatrixAt(i, blank.matrix)
                         mesh.setColorAt(i, color.set(colors[i]))
 
                         i++
