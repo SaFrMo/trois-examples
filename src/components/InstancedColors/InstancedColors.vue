@@ -1,6 +1,6 @@
 <template>
     <Renderer ref="renderer" resize antialias orbit-ctrl>
-        <Camera :position="{ x: 15, y: 20, z: 30 }" />
+        <Camera :position="{ x: -250, y: 0, z: 0 }" ref="camera" />
         <Scene>
             <PointLight />
             <InstancedMesh :count="count" @ready="ready">
@@ -16,7 +16,10 @@
 import { Object3D, MathUtils, Color } from 'three'
 import niceColors from 'nice-color-palettes'
 
-const count = 1000
+const height = 10,
+    width = 10,
+    depth = 10
+const count = height * width * depth
 const colors = new Array(count)
     .fill()
     .map(() => niceColors[17][Math.floor(Math.random() * 5)])
@@ -36,16 +39,35 @@ export default {
 
             const dummy = new Object3D()
             const color = new Color()
+            const spacer = 15
 
-            for (let i = 0; i < count; i++) {
-                dummy.position.set(rndFS(200), rndFS(200), rndFS(200))
-                const scale = rnd(0.2, 1)
-                dummy.scale.set(scale, scale, scale)
-                dummy.updateMatrix()
-                mesh.setMatrixAt(i, dummy.matrix)
+            // for (let i = 0; i < count; i++) {
+            //     dummy.position.set(rndFS(200), rndFS(200), rndFS(200))
+            //     const scale = rnd(0.2, 1)
+            //     dummy.scale.set(scale, scale, scale)
+            //     dummy.updateMatrix()
+            //     mesh.setMatrixAt(i, dummy.matrix)
 
-                mesh.setColorAt(i, color.set(colors[i]))
+            //     mesh.setColorAt(i, color.set(colors[i]))
+            // }
+            let i = 0
+            const xOffset = spacer * width * 0.5
+            const yOffset = spacer * height * 0.5
+            const zOffset = spacer * depth * 0.5
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    for (let z = 0; z < depth; z++) {
+                        dummy.position.set(
+                            x * spacer - xOffset,
+                            y * spacer - yOffset,
+                            z * spacer - zOffset
+                        )
+                        dummy.updateMatrix()
+                        mesh.setMatrixAt(i++, dummy.matrix)
+                    }
+                }
             }
+
             mesh.instanceMatrix.needsUpdate = true
 
             this.render(box)
