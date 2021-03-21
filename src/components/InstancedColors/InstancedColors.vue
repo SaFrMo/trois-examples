@@ -1,6 +1,9 @@
 <template>
     <Renderer ref="renderer" resize antialias>
+        <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20" />
+
+        <!-- scene -->
         <Scene background="lightpink">
             <AmbientLight />
             <PointLight
@@ -12,6 +15,13 @@
                 <PhongMaterial />
             </InstancedMesh>
         </Scene>
+
+        <!-- effect composer -->
+        <EffectComposer>
+            <RenderPass />
+            <SSAOPass :options="{ kernelRadius: 0.2, maxDistance: 0.03 }" />
+            <UnrealBloomPass :strength="1" :threshold="0.99" />
+        </EffectComposer>
     </Renderer>
 </template>
 
