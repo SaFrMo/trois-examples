@@ -1,5 +1,5 @@
 <template>
-    <Renderer ref="renderer" resize antialias>
+    <Renderer ref="renderer" resize antialias mouse-over>
         <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20" />
 
@@ -19,7 +19,7 @@
         <!-- effect composer -->
         <EffectComposer>
             <RenderPass />
-            <SSAOPass :options="{ kernelRadius: 0.2, maxDistance: 0.03 }" />
+            <SSAOPass @ready="passReady" />
             <UnrealBloomPass :strength="1" :threshold="0.99" />
         </EffectComposer>
     </Renderer>
@@ -51,7 +51,8 @@ export default {
     methods: {
         ready(box) {
             const { mesh } = box
-
+            const { three } = this.$refs.renderer
+            three.addIntersectObject(mesh)
             let i = 0
             for (let x = 0; x < width; x++) {
                 for (let y = 0; y < height; y++) {
@@ -63,6 +64,10 @@ export default {
             }
 
             this.$refs.renderer.onBeforeRender(this.render)
+        },
+        passReady(pass) {
+            pass.kernelRadius = 0.2
+            pass.maxDistance = 0.03
         },
         render() {
             const { mesh } = this.$refs.box
@@ -94,6 +99,9 @@ export default {
                 }
             }
             mesh.instanceMatrix.needsUpdate = true
+        },
+        meshHover(e) {
+            console.log(e)
         },
     },
 }
