@@ -1,7 +1,9 @@
 <template>
     <Renderer ref="renderer" resize antialias mouse-over>
         <!-- camera -->
-        <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20" />
+        <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20">
+            <Raycaster :onPointerEnter="onHover" :onPointerLeave="onLeave" />
+        </Camera>
 
         <!-- scene -->
         <Scene background="lightpink">
@@ -90,7 +92,6 @@ export default {
                             Math.sin(z / 4 + time)
                         blank.rotation.z = blank.rotation.y * 2
 
-                        // TODO: hover
                         blank.updateMatrix()
                         mesh.setMatrixAt(i, blank.matrix)
 
@@ -100,8 +101,21 @@ export default {
             }
             mesh.instanceMatrix.needsUpdate = true
         },
-        meshHover(e) {
-            console.log(e)
+        onHover([intersect]) {
+            this.$refs.box.mesh.setColorAt(
+                intersect.instanceId,
+                color.set('white')
+            )
+            this.$refs.box.mesh.instanceColor.needsUpdate = true
+        },
+        onLeave(intersects) {
+            for (let intersect of intersects) {
+                this.$refs.box.mesh.setColorAt(
+                    intersect.instanceId,
+                    color.set(this.colors[intersect.instanceId])
+                )
+            }
+            this.$refs.box.mesh.instanceColor.needsUpdate = true
         },
     },
 }
