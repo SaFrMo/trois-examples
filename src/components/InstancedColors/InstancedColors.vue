@@ -2,7 +2,7 @@
     <Renderer ref="renderer" resize antialias mouse-over>
         <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20">
-            <Raycaster :onPointerEnter="onHover" :onPointerLeave="onLeave" />
+            <Raycaster :onPointerOver="onHover" :onPointerLeave="onLeave" />
         </Camera>
 
         <!-- scene -->
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-// lots of this is lifted from a react-three-fiber demo: https://codesandbox.io/embed/r3f-instanced-colors-8fo01
+// this is a port of an excellent react-three-fiber demo: https://codesandbox.io/embed/r3f-instanced-colors-8fo01
 import { Object3D, Color } from 'three'
 import niceColors from 'nice-color-palettes'
 
@@ -48,6 +48,7 @@ export default {
             colors,
             count,
             startTime: Date.now(),
+            selected: null,
         }
     },
     methods: {
@@ -85,37 +86,52 @@ export default {
             for (let x = 0; x < width; x++) {
                 for (let y = 0; y < height; y++) {
                     for (let z = 0; z < depth; z++) {
-                        blank.position.set(5 - x, 5 - y, 5 - z)
+                        // position
+                        blank.position.set(
+                            width * 0.5 - x,
+                            height * 0.5 - y,
+                            depth * 0.5 - z
+                        )
+
+                        // rotation
                         blank.rotation.y =
-                            Math.sin(x / 4 + time) +
-                            Math.sin(y / 4 + time) +
-                            Math.sin(z / 4 + time)
+                            Math.sin(x * 0.25 + time) +
+                            Math.sin(y * 0.25 + time) +
+                            Math.sin(z * 0.25 + time)
                         blank.rotation.z = blank.rotation.y * 2
 
+                        // scale
+                        const scale = i === this.selected ? 2 : 1
+                        blank.scale.set(scale, scale, scale)
+
+                        // set matrix
                         blank.updateMatrix()
                         mesh.setMatrixAt(i, blank.matrix)
+
+                        // set color
+                        mesh.setColorAt(
+                            i,
+                            color.set(
+                                i === this.selected ? 'white' : this.colors[i]
+                            )
+                        )
 
                         i++
                     }
                 }
             }
             mesh.instanceMatrix.needsUpdate = true
+            mesh.instanceColor.needsUpdate = true
         },
         onHover([intersect]) {
-            this.$refs.box.mesh.setColorAt(
-                intersect.instanceId,
-                color.set('white')
-            )
-            this.$refs.box.mesh.instanceColor.needsUpdate = true
-        },
-        onLeave(intersects) {
-            for (let intersect of intersects) {
-                this.$refs.box.mesh.setColorAt(
-                    intersect.instanceId,
-                    color.set(this.colors[intersect.instanceId])
-                )
+            if (intersect) {
+                this.selected = intersect.instanceId
             }
-            this.$refs.box.mesh.instanceColor.needsUpdate = true
+        },
+        onLeave([intersect]) {
+            if (!intersect || this.selected === intersect.instanceId) {
+                this.selected = null
+            }
         },
     },
 }
