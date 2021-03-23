@@ -1,7 +1,7 @@
 <template>
     <Renderer ref="renderer" mouse-over click resize antialias orbit-ctrl>
         <Camera :position="{ y: 25, z: 30 }" />
-        <Scene>
+        <Scene background="lightblue">
             <PointLight :position="{ y: 50, z: 50 }" />
             <Ground />
         </Scene>

@@ -19,9 +19,10 @@
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 import Lightboxes from './components/Lightboxes/Lightboxes.vue'
 import InstancedColors from './components/InstancedColors/InstancedColors.vue'
+import PointerTester from './components/PointerTester.vue'
 
 export default {
-    components: { WindWakerWater, Lightboxes, InstancedColors },
+    components: { WindWakerWater, Lightboxes, InstancedColors, PointerTester },
     data() {
         return {
             selected: '',
