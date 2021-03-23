@@ -1,12 +1,12 @@
 <template>
     <section class="gallery">
-        <!-- <ul class="items">
+        <ul class="items">
             <li v-for="(cmp, i) in Object.keys($options.components)" :key="i">
                 <button @click="selected = cmp">
                     <component :is="cmp" />
                 </button>
             </li>
-        </ul> -->
+        </ul>
 
         <div v-if="selected" class="selected">
             <button @click="selected = ''" aria-label="Close."></button>
@@ -24,7 +24,7 @@ export default {
     components: { WindWakerWater, Lightboxes, InstancedColors },
     data() {
         return {
-            selected: 'instanced-colors',
+            selected: '',
         }
     },
     mounted() {
@@ -53,14 +53,20 @@ html,
     .items {
         display: grid;
         grid-template-columns: repeat(3, 300px);
-        grid-auto-rows: 170px;
         grid-gap: 40px;
         list-style-type: none;
         margin: 0;
         padding: 0;
-        margin: 30px auto;
+        margin: 40px auto;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: 1100px) {
+            grid-template-columns: repeat(2, 300px);
+        }
+        @media (max-width: 700px) {
+            grid-template-columns: 300px;
+        }
     }
     .selected {
         position: fixed;
@@ -68,7 +74,7 @@ html,
         right: 30px;
         bottom: 30px;
         left: 30px;
-        width: 100%;
+        // width: 100%;
 
         button {
             position: fixed;
@@ -87,6 +93,9 @@ html,
         border: none;
         background: none;
         cursor: pointer;
+        width: 100%;
+        position: relative;
+        display: block;
     }
 }
 </style>
