@@ -24,10 +24,10 @@ import MarsDemo from './components/MarsDemo.vue'
 
 export default {
     components: {
-        // WindWakerWater,
-        // Lightboxes,
-        // InstancedColors,
-        // PointerTester,
+        WindWakerWater,
+        Lightboxes,
+        InstancedColors,
+        PointerTester,
         MarsDemo,
     },
     data() {
