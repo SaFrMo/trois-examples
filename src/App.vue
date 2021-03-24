@@ -32,7 +32,7 @@ export default {
     },
     data() {
         return {
-            selected: 'MarsDemo',
+            selected: '',
         }
     },
     mounted() {
