@@ -5,30 +5,37 @@
 
         <!-- scene -->
         <Scene background="tomato">
-            <Box :onPointerEnter="onPointerEnter">
-                <BasicMaterial :color="color" ref="mat" />
+            <Box
+                v-for="x in count"
+                :key="x"
+                :position="{ x: x - count * 0.5 }"
+                :size="0.5"
+                :onPointerEnter="setRed"
+                :onPointerLeave="setBlue"
+            >
+                <BasicMaterial color="blue" ref="mat" />
             </Box>
         </Scene>
-
-        <!-- effect composer -->
-        <EffectComposer>
-            <RenderPass />
-            <UnrealBloomPass :strength="0.3" :threshold="0.6" />
-            <FXAAPass />
-        </EffectComposer>
     </Renderer>
 </template>
 
 <script>
+import { Color } from 'three'
+const red = new Color('red')
+const blue = new Color('blue')
+
 export default {
     data() {
         return {
-            color: 'blue',
+            count: 5,
         }
     },
     methods: {
-        onPointerEnter(evt) {
-            this.color = 'red'
+        setRed({ object }) {
+            object.material.color = red
+        },
+        setBlue({ object }) {
+            object.material.color = blue
         },
     },
 }
