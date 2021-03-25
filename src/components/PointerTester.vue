@@ -8,7 +8,19 @@
             <Box
                 v-for="x in count"
                 :key="x"
-                :position="{ x: x - count * 0.5, z: -x }"
+                :position="{ x: x - count * 0.5, z: -1 }"
+                :size="0.5"
+                :onPointerEnter="setRed"
+                :onPointerLeave="setBlue"
+                pointer-objects
+                @ready="boxReady($event, x)"
+            >
+                <BasicMaterial color="blue" ref="mat" />
+            </Box>
+            <Box
+                v-for="x in count"
+                :key="x"
+                :position="{ x: x - count * 0.5, z: -2 }"
                 :size="0.5"
                 :onPointerEnter="setRed"
                 :onPointerLeave="setBlue"
