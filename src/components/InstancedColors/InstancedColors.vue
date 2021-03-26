@@ -2,7 +2,11 @@
     <Renderer ref="renderer" resize antialias mouse-over>
         <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20">
-            <Raycaster :onPointerOver="onHover" :onPointerLeave="onLeave" />
+            <Raycaster
+                :onClick="onClick"
+                :onPointerOver="onHover"
+                :onPointerLeave="onLeave"
+            />
         </Camera>
 
         <!-- scene -->
@@ -52,6 +56,9 @@ export default {
         }
     },
     methods: {
+        onClick(intersections) {
+            console.log(intersections)
+        },
         ready(box) {
             const { mesh } = box
             const { three } = this.$refs.renderer

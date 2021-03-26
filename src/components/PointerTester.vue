@@ -14,6 +14,7 @@
                 :onPointerLeave="setBlue"
                 pointer-objects
                 @ready="boxReady($event, x)"
+                :onClick="setGreen"
             >
                 <BasicMaterial color="blue" ref="mat" />
             </Box>
@@ -26,6 +27,7 @@
                 :onPointerLeave="setBlue"
                 pointer-objects
                 @ready="boxReady($event, x)"
+                :onClick="setGreen"
             >
                 <BasicMaterial color="blue" ref="mat" />
             </Box>
@@ -37,6 +39,7 @@
 import { Color } from 'three'
 const red = new Color('red')
 const blue = new Color('blue')
+const green = new Color('green')
 import { tween } from 'popmotion'
 
 export default {
@@ -51,6 +54,9 @@ export default {
         },
         setBlue({ object }) {
             object.material.color = blue
+        },
+        setGreen({ object }) {
+            object.material.color = green
         },
         boxReady(box, x) {
             tween({
