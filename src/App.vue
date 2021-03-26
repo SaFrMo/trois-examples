@@ -9,7 +9,7 @@
         </ul>
 
         <div v-if="selected" class="selected">
-            <button @click="selected = ''" aria-label="Close."></button>
+            <button aria-label="Close."></button>
             <component :is="selected" class="canvas" />
         </div>
     </section>
@@ -24,15 +24,15 @@ import MarsDemo from './components/MarsDemo.vue'
 
 export default {
     components: {
-        WindWakerWater,
-        Lightboxes,
-        InstancedColors,
+        // WindWakerWater,
+        // Lightboxes,
+        // InstancedColors,
         PointerTester,
-        MarsDemo,
+        // MarsDemo,
     },
     data() {
         return {
-            selected: '',
+            selected: 'PointerTester',
         }
     },
     mounted() {
