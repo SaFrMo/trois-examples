@@ -1,15 +1,15 @@
 <template>
     <section class="gallery">
-        <ul class="items">
+        <!-- <ul class="items">
             <li v-for="(cmp, i) in Object.keys($options.components)" :key="i">
                 <button @click="selected = cmp">
                     <component :is="cmp" />
                 </button>
             </li>
-        </ul>
+        </ul> -->
 
         <div v-if="selected" class="selected">
-            <button @click="selected = ''" aria-label="Close."></button>
+            <button aria-label="Close."></button>
             <component :is="selected" class="canvas" />
         </div>
     </section>
@@ -24,15 +24,15 @@ import MarsDemo from './components/MarsDemo.vue'
 
 export default {
     components: {
-        WindWakerWater,
-        Lightboxes,
+        // WindWakerWater,
+        // Lightboxes,
         InstancedColors,
-        PointerTester,
-        MarsDemo,
+        // PointerTester,
+        // MarsDemo,
     },
     data() {
         return {
-            selected: '',
+            selected: 'InstancedColors',
         }
     },
     mounted() {

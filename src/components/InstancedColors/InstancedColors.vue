@@ -1,5 +1,5 @@
 <template>
-    <Renderer ref="renderer" resize antialias mouse-over>
+    <Renderer ref="renderer" resize antialias>
         <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20">
             <Raycaster :onPointerOver="onHover" :onPointerLeave="onLeave" />
