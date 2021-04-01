@@ -18,9 +18,18 @@
 <script>
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 import Lightboxes from './components/Lightboxes/Lightboxes.vue'
+import InstancedColors from './components/InstancedColors/InstancedColors.vue'
+import PointerTester from './components/PointerTester.vue'
+import MarsDemo from './components/MarsDemo.vue'
 
 export default {
-    components: { WindWakerWater, Lightboxes },
+    components: {
+        WindWakerWater,
+        Lightboxes,
+        InstancedColors,
+        PointerTester,
+        MarsDemo,
+    },
     data() {
         return {
             selected: '',
@@ -52,14 +61,20 @@ html,
     .items {
         display: grid;
         grid-template-columns: repeat(3, 300px);
-        grid-auto-rows: 170px;
         grid-gap: 40px;
         list-style-type: none;
         margin: 0;
         padding: 0;
-        margin: 30px auto;
+        margin: 40px auto;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: 1100px) {
+            grid-template-columns: repeat(2, 300px);
+        }
+        @media (max-width: 700px) {
+            grid-template-columns: 300px;
+        }
     }
     .selected {
         position: fixed;
@@ -67,7 +82,7 @@ html,
         right: 30px;
         bottom: 30px;
         left: 30px;
-        width: 100%;
+        // width: 100%;
 
         button {
             position: fixed;
@@ -86,6 +101,9 @@ html,
         border: none;
         background: none;
         cursor: pointer;
+        width: 100%;
+        position: relative;
+        display: block;
     }
 }
 </style>
