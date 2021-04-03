@@ -27,7 +27,7 @@ export default {
         WindWakerWater,
         Lightboxes,
         InstancedColors,
-        PointerTester,
+        // PointerTester,
         MarsDemo,
     },
     data() {
