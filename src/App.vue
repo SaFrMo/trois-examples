@@ -1,7 +1,11 @@
 <template>
     <section class="gallery">
         <ul class="items">
-            <li v-for="(cmp, i) in Object.keys($options.components)" :key="i">
+            <li
+                v-for="(cmp, i) in Object.keys($options.components)"
+                :key="i"
+                class="single-item"
+            >
                 <button @click="selected = cmp">
                     <component :is="cmp" />
                 </button>
@@ -19,7 +23,7 @@
 import WindWakerWater from './components/WindWaker/WindWakerWater.vue'
 import Lightboxes from './components/Lightboxes/Lightboxes.vue'
 import InstancedColors from './components/InstancedColors/InstancedColors.vue'
-import PointerTester from './components/PointerTester.vue'
+import AsciiTerrain from './components/AsciiTerrain/AsciiTerrain.vue'
 import MarsDemo from './components/MarsDemo.vue'
 
 export default {
@@ -27,8 +31,8 @@ export default {
         WindWakerWater,
         Lightboxes,
         InstancedColors,
-        // PointerTester,
         MarsDemo,
+        AsciiTerrain,
     },
     data() {
         return {
@@ -75,6 +79,10 @@ html,
         @media (max-width: 700px) {
             grid-template-columns: 300px;
         }
+
+        .single-item {
+            height: 100%;
+        }
     }
     .selected {
         position: fixed;
@@ -83,6 +91,7 @@ html,
         bottom: 30px;
         left: 30px;
         // width: 100%;
+        background: white;
 
         button {
             position: fixed;
@@ -102,6 +111,7 @@ html,
         background: none;
         cursor: pointer;
         width: 100%;
+        height: 100%;
         position: relative;
         display: block;
     }
