@@ -32,7 +32,7 @@ export default {
         Lightboxes,
         InstancedColors,
         MarsDemo,
-        AsciiTerrain,
+        // AsciiTerrain,
     },
     data() {
         return {
