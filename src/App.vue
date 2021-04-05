@@ -25,6 +25,7 @@ import Lightboxes from './components/Lightboxes/Lightboxes.vue'
 import InstancedColors from './components/InstancedColors/InstancedColors.vue'
 import AsciiTerrain from './components/AsciiTerrain/AsciiTerrain.vue'
 import MarsDemo from './components/MarsDemo.vue'
+import GammaCorrection from './components/GammaCorrection/GammaCorrection.vue'
 
 export default {
     components: {
@@ -33,10 +34,11 @@ export default {
         InstancedColors,
         MarsDemo,
         // AsciiTerrain,
+        GammaCorrection
     },
     data() {
         return {
-            selected: '',
+            selected: 'GammaCorrection',
         }
     },
     mounted() {
