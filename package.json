@@ -10,7 +10,7 @@
     "nice-color-palettes": "3.0.0",
     "popmotion": "8.7.6",
     "three": "0.126.1",
-    "troisjs": "0.1.19",
+    "troisjs": "0.2.1",
     "vue": "^3.0.5"
   },
   "devDependencies": {
