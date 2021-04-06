@@ -1,5 +1,5 @@
 <template>
-    <Renderer ref="renderer" resize shadow orbit-ctrl>
+    <Renderer ref="renderer" resize shadow>
         <!-- camera -->
         <Camera
             :position="{ z: 70 }"
@@ -11,20 +11,33 @@
 
         <!-- scene -->
         <Scene background="#f0f0f0">
-            <AmbientLight :intensity="1.5" />
+            <AmbientLight :intensity="0.98" />
             <PointLight
                 :position="{ x: 100, y: 100, z: 100 }"
                 :intensity="2"
                 cast-shadow
+                :shadow-map-size="{ width: 1024, height: 1024 }"
             />
             <PointLight
                 :position="{ x: -100, y: -100, z: -100 }"
                 :intensity="5"
-                cast-shadow
                 color="red"
             />
 
-            <Box :size="20"><PhongMaterial /></Box>
+            <InstancedMesh
+                :count="count"
+                ref="cloud"
+                @created="ready"
+                cast-shadow
+                receive-shadow
+            >
+                <SphereGeometry
+                    :radius="1"
+                    :width-segments="32"
+                    :height-segments="32"
+                />
+                <PhongMaterial />
+            </InstancedMesh>
             <!-- <InstancedMesh
                 :count="count"
                 ref="box"
@@ -38,78 +51,86 @@
         </Scene>
 
         <!-- effect composer -->
-        <!-- <EffectComposer>
+        <EffectComposer>
             <RenderPass />
-            <SSAOPass :options="{ kernelRadius: 0.2, maxDistance: 0.03 }" />
-            <UnrealBloomPass :strength="1" :threshold="0.99" />
-            <FXAAPass />
-        </EffectComposer> -->
+            <SSAOPass
+                :options="{
+                    samples: 31,
+                    radius: 20,
+                    intensity: 40,
+                    luminanceInfluence: 0.1,
+                }"
+            />
+        </EffectComposer>
     </Renderer>
 </template>
 
 <script>
 // this is a port of another incredible react-three-fiber demo: https://codesandbox.io/embed/r3f-gamma-correction-kmb9i
-import { Object3D, Color } from 'three'
+import { Object3D } from 'three'
+const dummy = new Object3D()
 
 export default {
     setup() {
-        return {}
+        return {
+            count: 150,
+            particles: [],
+        }
     },
     methods: {
-        ready(mesh) {
-            // let i = 0
-            // for (let x = 0; x < width; x++) {
-            //     for (let y = 0; y < height; y++) {
-            //         for (let z = 0; z < depth; z++) {
-            //             mesh.setColorAt(i, color.set(colors[i]))
-            //             i++
-            //         }
-            //     }
-            // }
-            // this.$refs.renderer.onBeforeRender(this.render)
+        ready() {
+            for (let i = 0; i < this.count; i++) {
+                const t = Math.random() * 100
+                const factor = 20 + Math.random() * 100
+                const speed = 0.01 + Math.random() / 200
+                const xFactor = -20 + Math.random() * 40
+                const yFactor = -20 + Math.random() * 40
+                const zFactor = -20 + Math.random() * 40
+                this.particles.push({
+                    t,
+                    factor,
+                    speed,
+                    xFactor,
+                    yFactor,
+                    zFactor,
+                    mx: 0,
+                    my: 0,
+                })
+            }
+
+            this.$refs.renderer.onBeforeRender(this.render)
         },
         render() {
-            // const { mesh } = this.$refs.box
-            // const time = (Date.now() - this.startTime) * 0.001
-            // // rotate full box
-            // mesh.rotation.x = Math.sin(time / 4)
-            // mesh.rotation.y = Math.sin(time / 2)
-            // // rotate individual boxes
-            // let i = 0
-            // for (let x = 0; x < width; x++) {
-            //     for (let y = 0; y < height; y++) {
-            //         for (let z = 0; z < depth; z++) {
-            //             // position
-            //             dummy.position.set(
-            //                 width * 0.5 - x,
-            //                 height * 0.5 - y,
-            //                 depth * 0.5 - z
-            //             )
-            //             // rotation
-            //             dummy.rotation.y =
-            //                 Math.sin(x * 0.25 + time) +
-            //                 Math.sin(y * 0.25 + time) +
-            //                 Math.sin(z * 0.25 + time)
-            //             dummy.rotation.z = dummy.rotation.y * 2
-            //             // scale
-            //             const scale = i === this.selected ? 2 : 1
-            //             dummy.scale.set(scale, scale, scale)
-            //             // set matrix
-            //             dummy.updateMatrix()
-            //             mesh.setMatrixAt(i, dummy.matrix)
-            //             // set color
-            //             mesh.setColorAt(
-            //                 i,
-            //                 color.set(
-            //                     i === this.selected ? 'white' : this.colors[i]
-            //                 )
-            //             )
-            //             i++
-            //         }
-            //     }
-            // }
-            // mesh.instanceMatrix.needsUpdate = true
-            // mesh.instanceColor.needsUpdate = true
+            const { mesh } = this.$refs.cloud
+            this.particles.forEach((particle, i) => {
+                let { t, factor, speed, xFactor, yFactor, zFactor } = particle
+                t = particle.t += speed / 2
+                const a = Math.cos(t) + Math.sin(t * 1) / 10
+                const b = Math.sin(t) + Math.cos(t * 2) / 10
+                const s = Math.max(1.5, Math.cos(t) * 5)
+                particle.mx += 0
+                // (state.mouse.x * state.viewport.width - particle.mx) * 0.02
+                particle.my += 0
+                //(state.mouse.y * state.viewport.height - particle.my) * 0.02
+                dummy.position.set(
+                    (particle.mx / 10) * a +
+                        xFactor +
+                        Math.cos((t / 10) * factor) +
+                        (Math.sin(t * 1) * factor) / 10,
+                    (particle.my / 10) * b +
+                        yFactor +
+                        Math.sin((t / 10) * factor) +
+                        (Math.cos(t * 2) * factor) / 10,
+                    (particle.my / 10) * b +
+                        zFactor +
+                        Math.cos((t / 10) * factor) +
+                        (Math.sin(t * 3) * factor) / 10
+                )
+                dummy.scale.set(s, s, s)
+                dummy.updateMatrix()
+                mesh.setMatrixAt(i, dummy.matrix)
+            })
+            mesh.instanceMatrix.needsUpdate = true
         },
     },
 }
