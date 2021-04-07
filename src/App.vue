@@ -34,11 +34,11 @@ export default {
         InstancedColors,
         MarsDemo,
         // AsciiTerrain,
-        // GammaCorrection
+        GammaCorrection,
     },
     data() {
         return {
-            selected: '',
+            selected: 'GammaCorrection',
         }
     },
     mounted() {

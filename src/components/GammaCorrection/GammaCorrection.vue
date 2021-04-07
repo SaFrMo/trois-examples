@@ -53,14 +53,16 @@
         <!-- effect composer -->
         <EffectComposer>
             <RenderPass />
-            <SSAOPass
+            <CustomPass :method="NormalPass" :options="normalOptions" />
+            <!-- <CustomPass :method="SSAOEffect" :options="ssaoOptions" /> -->
+            <!-- <SSAOPass
                 :options="{
                     samples: 31,
                     radius: 20,
                     intensity: 40,
                     luminanceInfluence: 0.1,
                 }"
-            />
+            /> -->
         </EffectComposer>
     </Renderer>
 </template>
@@ -69,6 +71,7 @@
 // this is a port of another incredible react-three-fiber demo: https://codesandbox.io/embed/r3f-gamma-correction-kmb9i
 import { Object3D } from 'three'
 const dummy = new Object3D()
+import { SSAOEffect, NormalPass } from 'postprocessing'
 
 export default {
     setup() {
@@ -77,7 +80,17 @@ export default {
             particles: [],
         }
     },
+    computed: {
+        normalOptions() {
+            return ['scene', 'camera']
+        },
+        // ssaoOptions() {
+        //     return ['camera']
+        // },
+    },
     methods: {
+        SSAOEffect,
+        NormalPass,
         ready() {
             for (let i = 0; i < this.count; i++) {
                 const t = Math.random() * 100
