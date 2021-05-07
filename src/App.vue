@@ -26,6 +26,8 @@ import InstancedColors from './components/InstancedColors/InstancedColors.vue'
 import AsciiTerrain from './components/AsciiTerrain/AsciiTerrain.vue'
 import MarsDemo from './components/MarsDemo.vue'
 import GammaCorrection from './components/GammaCorrection/GammaCorrection.vue'
+import ParticleSwarm from './components/ParticleSwarm.vue'
+import MinimumScene from './components/MinimumScene.vue'
 
 export default {
     components: {
@@ -34,11 +36,13 @@ export default {
         // InstancedColors,
         // MarsDemo,
         // AsciiTerrain,
-        GammaCorrection,
+        // GammaCorrection,
+        ParticleSwarm,
+        MinimumScene,
     },
     data() {
         return {
-            selected: 'GammaCorrection',
+            selected: 'ParticleSwarm',
         }
     },
     mounted() {
