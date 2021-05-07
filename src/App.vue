@@ -29,10 +29,10 @@ import GammaCorrection from './components/GammaCorrection/GammaCorrection.vue'
 
 export default {
     components: {
-        WindWakerWater,
-        Lightboxes,
-        InstancedColors,
-        MarsDemo,
+        // WindWakerWater,
+        // Lightboxes,
+        // InstancedColors,
+        // MarsDemo,
         // AsciiTerrain,
         GammaCorrection,
     },

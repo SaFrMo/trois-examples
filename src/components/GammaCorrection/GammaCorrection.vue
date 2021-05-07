@@ -53,8 +53,9 @@
         <!-- effect composer -->
         <EffectComposer>
             <RenderPass />
-            <CustomPass :method="NormalPass" :options="normalOptions" />
-            <!-- <CustomPass :method="SSAOEffect" :options="ssaoOptions" /> -->
+            <!-- <CustomPass :method="NormalPass" :options="normalOptions" /> -->
+            <!-- <CustomEffect :method="SSAOEffect" :options="ssaoOptions" /> -->
+            <CustomEffect :method="PixelationEffect" />
             <!-- <SSAOPass
                 :options="{
                     samples: 31,
@@ -71,7 +72,7 @@
 // this is a port of another incredible react-three-fiber demo: https://codesandbox.io/embed/r3f-gamma-correction-kmb9i
 import { Object3D } from 'three'
 const dummy = new Object3D()
-import { SSAOEffect, NormalPass } from 'postprocessing'
+import { SSAOEffect, NormalPass, PixelationEffect } from 'postprocessing'
 
 export default {
     setup() {
@@ -84,13 +85,31 @@ export default {
         normalOptions() {
             return ['scene', 'camera']
         },
-        // ssaoOptions() {
-        //     return ['camera']
-        // },
+        ssaoOptions() {
+            return [
+                'camera',
+                'previous-texture',
+                {
+                    samples: 31,
+                    rings: 4,
+                    distanceThreshold: 1.0,
+                    distanceFalloff: 0.0,
+                    rangeThreshold: 0.5,
+                    rangeFalloff: 0.1,
+                    luminanceInfluence: 100,
+                    radius: 0.1,
+                    // scale: 0.5,
+                    bias: 0.5,
+                    intensity: 0.1,
+                    // samples={31} radius={20} intensity={40} luminanceInfluence={0.1}
+                },
+            ]
+        },
     },
     methods: {
         SSAOEffect,
         NormalPass,
+        PixelationEffect,
         ready() {
             for (let i = 0; i < this.count; i++) {
                 const t = Math.random() * 100
