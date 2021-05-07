@@ -38,7 +38,7 @@ export default {
         // AsciiTerrain,
         // GammaCorrection,
         ParticleSwarm,
-        MinimumScene,
+        // MinimumScene,
     },
     data() {
         return {
