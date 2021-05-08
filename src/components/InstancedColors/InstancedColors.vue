@@ -38,7 +38,7 @@
 // this is a port of an excellent react-three-fiber demo: https://codesandbox.io/embed/r3f-instanced-colors-8fo01
 import { Object3D, Color } from 'three'
 import niceColors from 'nice-color-palettes'
-import Stats from '../../../trois-edge/src/components/misc/Stats'
+// import Stats from '../../../trois-edge/src/components/misc/Stats'
 
 const height = 10,
     width = 10,
@@ -62,7 +62,7 @@ export default {
         }
     },
     components: {
-        Stats,
+        // Stats,
     },
     methods: {
         ready(mesh) {
