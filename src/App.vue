@@ -25,14 +25,20 @@ import Lightboxes from './components/Lightboxes/Lightboxes.vue'
 import InstancedColors from './components/InstancedColors/InstancedColors.vue'
 import AsciiTerrain from './components/AsciiTerrain/AsciiTerrain.vue'
 import MarsDemo from './components/MarsDemo.vue'
+import GammaCorrection from './components/GammaCorrection/GammaCorrection.vue'
+import ParticleSwarm from './components/ParticleSwarm.vue'
+import MinimumScene from './components/MinimumScene.vue'
 
 export default {
     components: {
-        WindWakerWater,
+        // WindWakerWater,
         Lightboxes,
         InstancedColors,
         MarsDemo,
-        // AsciiTerrain,
+        AsciiTerrain,
+        GammaCorrection,
+        ParticleSwarm,
+        // MinimumScene,
     },
     data() {
         return {
@@ -65,6 +71,7 @@ html,
     .items {
         display: grid;
         grid-template-columns: repeat(3, 300px);
+        grid-auto-rows: 150px;
         grid-gap: 40px;
         list-style-type: none;
         margin: 0;

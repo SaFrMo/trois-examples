@@ -60,12 +60,14 @@ export default {
         const sun = this.$refs.sun.light
         sun.shadow.camera.near = 1
         sun.shadow.camera.far = 5
-        sun.shadow.map.dispose()
+        if (sun.shadow.map) {
+            sun.shadow.map.dispose()
+        }
         sun.shadow.map = null
         sun.shadow.mapSize = new Vector2(2048, 2048)
 
         // update
-        this.$refs.renderer.three.onBeforeRender(this.update)
+        this.$refs.renderer.onBeforeRender(this.update)
     },
     methods: {
         update() {

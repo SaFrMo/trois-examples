@@ -9,8 +9,9 @@
   "dependencies": {
     "nice-color-palettes": "3.0.0",
     "popmotion": "8.7.6",
+    "postprocessing": "6.21.2",
     "three": "0.126.1",
-    "troisjs": "0.2.1",
+    "troisjs": "0.2.3",
     "vue": "^3.0.5"
   },
   "devDependencies": {

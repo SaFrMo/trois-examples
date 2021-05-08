@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { TroisJSVuePlugin } from 'troisjs'//'../trois-edge/src/plugin.js'
+import { TroisJSVuePlugin } from '../trois-edge/src/plugin.ts'
 import App from './App.vue'
 
 const app = createApp(App)
