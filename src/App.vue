@@ -32,17 +32,17 @@ import MinimumScene from './components/MinimumScene.vue'
 export default {
     components: {
         // WindWakerWater,
-        // Lightboxes,
-        // InstancedColors,
-        // MarsDemo,
-        // AsciiTerrain,
-        // GammaCorrection,
+        Lightboxes,
+        InstancedColors,
+        MarsDemo,
+        AsciiTerrain,
+        GammaCorrection,
         ParticleSwarm,
         // MinimumScene,
     },
     data() {
         return {
-            selected: 'ParticleSwarm',
+            selected: '',
         }
     },
     mounted() {

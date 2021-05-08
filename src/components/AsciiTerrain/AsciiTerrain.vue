@@ -31,9 +31,9 @@ export default {
         return {
             fragmentShader,
             vertexShader,
-            x: 0.7062909015047047,
-            y: 1.7581015041184327,
-            z: -0.9359404778660516,
+            x: -20.7062909015047047,
+            y: 20.7581015041184327,
+            z: -20.9359404778660516,
         }
     },
     async mounted() {
@@ -42,9 +42,8 @@ export default {
         const { width, height } = three.size
         effect.setSize(width, height)
         three.renderer.domElement.parentElement.appendChild(effect.domElement)
-        three.onBeforeRender(() => {
+        this.$refs.renderer.onBeforeRender(() => {
             effect.render(three.scene, three.camera)
-            console.log(three.camera.position)
         })
     },
 }

@@ -1,6 +1,6 @@
 <template>
     <Renderer ref="renderer" resize>
-        <Stats />
+        <!-- <Stats /> -->
 
         <!-- camera -->
         <Camera :position="{ z: 15 }" ref="camera" :near="5" :far="20" />
