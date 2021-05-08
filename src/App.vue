@@ -71,6 +71,7 @@ html,
     .items {
         display: grid;
         grid-template-columns: repeat(3, 300px);
+        grid-auto-rows: 150px;
         grid-gap: 40px;
         list-style-type: none;
         margin: 0;

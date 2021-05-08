@@ -8,15 +8,15 @@
             class="particle-swarm"
             alpha
         >
-            <Camera :fov="75" :position="{ z: 70 }" />
+            <Camera :fov="75" :position="{ z: 70 }" ref="camera" />
             <Scene>
                 <!-- scene lights -->
-                <PointLight :intensity="0.8" color="white" />
+                <PointLight :intensity="1.4" color="white" />
                 <SpotLight
-                    :intensity="0.2"
+                    :intensity="1.6"
                     :position="{ x: 70, y: 70, z: 70 }"
-                    :penumbra="1"
-                    color="lightblue"
+                    :penumbra="0.2"
+                    color="white"
                 />
 
                 <!-- mesh lights -->
@@ -24,6 +24,7 @@
                     :distance="120"
                     :intensity="0.8"
                     color="lightblue"
+                    ref="light"
                 />
 
                 <InstancedMesh ref="mesh" :count="count">
@@ -31,6 +32,11 @@
                     <StandardMaterial color="black" />
                 </InstancedMesh>
             </Scene>
+
+            <EffectComposer>
+                <RenderPass />
+                <UnrealBloomPass :strength="3" :radius="1" />
+            </EffectComposer>
         </Renderer>
     </div>
 </template>
@@ -38,7 +44,7 @@
 <script>
 import { Object3D } from 'three'
 
-const count = 20000
+const count = 10000
 
 export default {
     data() {
@@ -76,11 +82,18 @@ export default {
 
         // update loop
         this.$refs.renderer.onBeforeRender(this.update)
+        // console.log(this.$refs.light)
     },
     methods: {
         update() {
-            const mouse = this.$refs.renderer.three.pointer.position
+            const mouse = this.$refs.renderer.three.pointer.positionN
             const { mesh } = this.$refs.mesh
+
+            this.$refs.light.light.position.set(
+                mouse.x * 150,
+                mouse.y * 100,
+                this.$refs.light.light.position.z
+            )
 
             this.particles.forEach((particle, i) => {
                 let { t, factor, speed, xFactor, yFactor, zFactor } = particle
@@ -113,6 +126,9 @@ export default {
                 mesh.setMatrixAt(i, this.placer.matrix)
             })
             mesh.instanceMatrix.needsUpdate = true
+
+            this.$refs.camera.camera.position.z =
+                55 + Math.sin(Date.now() * 0.001) * 20
         },
     },
 }
